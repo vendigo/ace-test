@@ -2,18 +2,16 @@
 
 ## [Launch testApp](-)
 
-Property file: [test.properties](- "#fileName")
+| [ ][addProperty] [Properties][line] |
+|-------------------------------------|
+| db.driverClassName=org.h2.Driver    |
+| db.url=jdbc:h2:mem:devdb            |
+| age.limit=30                        |
 
-| Properties:                                 |
-|---------------------------------------------|
-| [db.driverClassName=org.h2.Driver][addLine] |
-| [db.url=jdbc:h2:mem:devdb][addLine]         |
-| [age.limit=30][addLine]                     |
+[line]: - "#line"
+[addProperty]: - "addProperty(#line)"
 
-[fileName]: - "#fileName"
-[addLine]: - "fileLine(#fileName, #TEXT)"
+[ ](- "setProperties()")
 
-[ ](- "createPropertyFile(#fileName)")
-
-When [TestApp](- "#appName") with parameters: [hello](- "#params") [runs](- "runApplication(#appName, #params)").
+When [TestApp](- "#appName") with parameters: '[hello](- "#params")' [runs](- "runApplication(#appName, #params)").
 Then everything is OK.

@@ -2,10 +2,10 @@ package test.app;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
@@ -15,10 +15,11 @@ import javax.sql.DataSource;
 public class AppConfig {
 
     @Bean
-    public DataSource dataSource(@Autowired Environment env) {
+    public DataSource dataSource(@Value("${db.driverClassName}")String driverClassName,
+                                 @Value("${db.url}")String dbUrl) {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(env.getProperty("db.driverClassName"));
-        dataSource.setUrl(env.getProperty("db.url"));
+        dataSource.setDriverClassName(driverClassName);
+        dataSource.setUrl(dbUrl);
         return dataSource;
     }
 

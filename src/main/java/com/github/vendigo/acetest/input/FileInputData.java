@@ -1,4 +1,4 @@
-package com.github.vendigo.acetest.files;
+package com.github.vendigo.acetest.input;
 
 import org.springframework.stereotype.Component;
 
@@ -17,14 +17,14 @@ public class FileInputData {
         data = new HashMap<>();
     }
 
-    public void addLine(String fileName, String line) {
-        if (!data.containsKey(fileName)) {
-            data.put(fileName, new ArrayList<>());
+    public void addLine(String dataSetName, String line) {
+        if (!data.containsKey(dataSetName)) {
+            data.put(dataSetName, new ArrayList<>());
         }
-        data.get(fileName).add(line);
+        data.get(dataSetName).add(line);
     }
 
-    public List<String> getLines(String fileName) {
-        return data.get(fileName);
+    public List<String> getLines(String dataSetName) {
+        return data.get(dataSetName);
     }
 }

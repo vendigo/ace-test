@@ -11,11 +11,11 @@ public class AceTestFixture {
         context.getAppRunner().runApplication(appName, params);
     }
 
-    public void fileLine(String fileName, String line) throws Exception {
-        context.getFileInputData().addLine(fileName, line.trim());
+    public void addProperty(String line) throws Exception {
+        context.getPropertySetter().addLine(line);
     }
 
-    public void createPropertyFile(String fileName) throws Exception {
-        context.getPropertyFileCreator().createPropertyFile(fileName);
+    public void setProperties() throws Exception {
+        context.getPropertySetter().setProperties();
     }
 }

@@ -1,7 +1,7 @@
 package com.github.vendigo.acetest;
 
-import com.github.vendigo.acetest.files.FileInputData;
-import com.github.vendigo.acetest.files.PropertyFileCreator;
+import com.github.vendigo.acetest.input.FileInputData;
+import com.github.vendigo.acetest.input.PropertySetter;
 import com.github.vendigo.acetest.run.AppRunner;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -16,11 +16,11 @@ public class ATContext {
         return appContext.getBean(AppRunner.class);
     }
 
-    public FileInputData getFileInputData() {
+    public FileInputData getInputData() {
         return appContext.getBean(FileInputData.class);
     }
 
-    public PropertyFileCreator getPropertyFileCreator() {
-        return appContext.getBean(PropertyFileCreator.class);
+    public PropertySetter getPropertySetter() {
+        return appContext.getBean(PropertySetter.class);
     }
 }
