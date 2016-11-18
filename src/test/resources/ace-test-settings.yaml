@@ -1,0 +1,3 @@
+launchers:
+  - appName: TestApp
+    className: test.app.Launcher
