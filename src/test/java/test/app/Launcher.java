@@ -1,24 +1,18 @@
 package test.app;
 
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @ComponentScan(basePackageClasses = Launcher.class)
-@PropertySource("test.properties")
+@PropertySource("classpath:test.properties")
 public class Launcher {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         AnnotationConfigApplicationContext appContext = new AnnotationConfigApplicationContext(Launcher.class);
-        BusinessComponent businessComponent = appContext.getBean(BusinessComponent.class);
-
-        if (args.length > 0) {
-            System.out.println("Argument: "+args[0]);
-        }
-        System.out.println("Username: "+businessComponent.getUserName());
-    }
-
-    @Bean
-    public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() {
-        return new PropertyPlaceholderConfigurer();
+        UserService userService = appContext.getBean(UserService.class);
+        System.out.println("Users: "+userService.getUsers());
+        System.out.println("Old users: "+userService.getOldUsers());
     }
 }

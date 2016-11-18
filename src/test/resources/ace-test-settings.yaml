@@ -1,3 +1,7 @@
 launchers:
   - appName: TestApp
     className: test.app.Launcher
+datasources:
+  - dbName: devDb
+    url: jdbc:h2:mem:devdb
+    schemaFile: schema.sql

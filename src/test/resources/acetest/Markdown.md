@@ -4,9 +4,11 @@
 
 Property file: [test.properties](- "#fileName")
 
-| Properties:                  |
-|------------------------------|
-| [user.name=vendigo][addLine] |
+| Properties:                                 |
+|---------------------------------------------|
+| [db.driverClassName=org.h2.Driver][addLine] |
+| [db.url=jdbc:h2:mem:devdb][addLine]         |
+| [age.limit=30][addLine]                     |
 
 [fileName]: - "#fileName"
 [addLine]: - "fileLine(#fileName, #TEXT)"

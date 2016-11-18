@@ -35,6 +35,7 @@ public class PropertyFileCreator {
         Method addURLMethod = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
         addURLMethod.setAccessible(true);
         addURLMethod.invoke(classLoader, folderFile.toURI().toURL());
+        System.setProperty("town", "Nezhin");
     }
 
     private void writeFile(String folder, String fileName, List<String> lines) throws Exception {
