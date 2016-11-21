@@ -5,3 +5,4 @@ datasources:
   - dbName: devDb
     url: jdbc:h2:mem:devdb
     schemaFile: schema.sql
+    liquibaseConfig: /liquibase/_liquibase.xml
