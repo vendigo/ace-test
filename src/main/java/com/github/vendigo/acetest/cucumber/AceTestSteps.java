@@ -2,7 +2,7 @@ package com.github.vendigo.acetest.cucumber;
 
 import com.github.vendigo.acetest.SpringConfig;
 import com.github.vendigo.acetest.db.dao.CrudService;
-import com.github.vendigo.acetest.input.PropertySetter;
+import com.github.vendigo.acetest.properties.PropertySetter;
 import com.github.vendigo.acetest.run.AppRunner;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -13,8 +13,8 @@ import org.springframework.test.context.ContextConfiguration;
 import java.util.List;
 import java.util.Map;
 
-import static com.github.vendigo.acetest.assertion.AssertionUtils.collectColumnNames;
-import static com.github.vendigo.acetest.assertion.DataMatcher.assertData;
+import static com.github.vendigo.acetest.db.assertion.DbDataMatcher.assertData;
+import static com.github.vendigo.acetest.db.assertion.DbDataMatcher.collectColumnNames;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
@@ -30,7 +30,7 @@ public class AceTestSteps {
 
     @Given("^Properties:$")
     public void properties(List<String> lines) {
-        propertySetter.setProperties(lines);
+        propertySetter.parseAndSetProperties(lines);
     }
 
     @Given("^Table (.*) is empty$")

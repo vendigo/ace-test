@@ -1,4 +1,4 @@
-package com.github.vendigo.acetest.db.init;
+package com.github.vendigo.acetest.db;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.jdbc.core.JdbcTemplate;

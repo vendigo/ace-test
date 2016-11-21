@@ -5,6 +5,9 @@ Feature: Sample
       | db.driverClassName=org.h2.Driver |
       | db.url=jdbc:h2:mem:devdb         |
       | age.limit=65                     |
+      | input.dir=${test.dir}\in         |
+      | processed.dir=${test.dir}\out    |
+
     Given Table TOldUser is empty
     Given Table TUser with records:
       | name    | age |

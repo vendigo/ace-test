@@ -1,8 +1,8 @@
-package com.github.vendigo.acetest.assertion;
+package com.github.vendigo.acetest.db.assertion;
 
 import java.util.Date;
 
-public class DataFormatter {
+public class DbDataFormatter {
     public static final String DATE_FORMAT = "%1$tY-%1$tm-%1$td";
     public static final String FLOAT_FORMAT = "%.2f";
 
