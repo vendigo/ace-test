@@ -11,8 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 public class Launcher {
     public static void main(String[] args) throws Exception {
         AnnotationConfigApplicationContext appContext = new AnnotationConfigApplicationContext(Launcher.class);
-        UserService userService = appContext.getBean(UserService.class);
-        System.out.println("Users: "+userService.getUsers());
-        System.out.println("Old users: "+userService.getOldUsers());
+        BusinessLogicComponent businessLogicComponent = appContext.getBean(BusinessLogicComponent.class);
+        businessLogicComponent.run();
     }
 }

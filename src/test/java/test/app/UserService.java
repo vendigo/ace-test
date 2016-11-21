@@ -23,6 +23,16 @@ public class UserService {
         return jdbcTemplate.query("SELECT name, age FROM TOldUser", rowMapper);
     }
 
+    public void insertOldUsers(List<User> users) {
+        for (User user : users) {
+            jdbcTemplate.update("INSERT INTO TOldUser (name, age) VALUES (?, ?)", preparedStatement -> {
+                preparedStatement.setString(1, user.getName());
+                preparedStatement.setInt(2, user.getAge());
+            });
+        }
+
+    }
+
     class UserRowMapper implements RowMapper<User> {
         @Override
         public User mapRow(ResultSet resultSet, int i) throws SQLException {

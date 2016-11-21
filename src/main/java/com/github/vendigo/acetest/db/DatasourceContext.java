@@ -2,8 +2,13 @@ package com.github.vendigo.acetest.db;
 
 import com.github.vendigo.acetest.config.Config;
 import com.github.vendigo.acetest.config.DatasourceConfig;
+import com.github.vendigo.acetest.db.dao.CrudMapper;
 import com.github.vendigo.acetest.db.init.SqlFileRunner;
+import com.google.common.collect.Iterables;
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,20 +21,27 @@ import java.util.Map;
 public class DatasourceContext {
     public static final String H2_DRIVER_CLASSNAME = "org.h2.Driver";
     private Map<String, DataSource> datasources = new HashMap<>();
+    private Map<String, SqlSessionFactory> sessionFactories = new HashMap<>();
     private SqlFileRunner sqlFileRunner = new SqlFileRunner();
 
     @Autowired
     Config config;
 
     @PostConstruct
-    public void init() {
-
-        config.getDatasources().stream().forEach(dsConfig -> {
+    public void init() throws Exception {
+        for (DatasourceConfig dsConfig : config.getDatasources()) {
             DataSource datasource = createDatasource(dsConfig);
             if (dsConfig.getSchemaFile() != null) {
                 sqlFileRunner.applySchemaFile(dsConfig.getSchemaFile(), datasource);
             }
-        });
+
+            SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+            sqlSessionFactoryBean.setDataSource(datasource);
+            Configuration configuration = new Configuration();
+            configuration.addMapper(CrudMapper.class);
+            sqlSessionFactoryBean.setConfiguration(configuration);
+            sessionFactories.put(dsConfig.getDbName(), sqlSessionFactoryBean.getObject());
+        }
     }
 
     private DataSource createDatasource(DatasourceConfig dsConfig) {
@@ -40,7 +52,11 @@ public class DatasourceContext {
         return dataSource;
     }
 
-    public DataSource getDatasource(String dbName) {
-        return datasources.get(dbName);
+    public SqlSessionFactory getSqlSessionFactory(String dbName) {
+        return sessionFactories.get(dbName);
+    }
+
+    public String getOnlyDbName() {
+        return Iterables.getOnlyElement(sessionFactories.keySet());
     }
 }
