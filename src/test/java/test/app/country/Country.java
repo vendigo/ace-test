@@ -1,6 +1,7 @@
 package test.app.country;
 
 import com.google.common.base.MoreObjects;
+import com.univocity.parsers.annotations.Parsed;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,14 +12,19 @@ import java.util.Objects;
 public class Country {
     @Id
     @Column
+    @Parsed
     private String name;
     @Column
+    @Parsed
     private String capital;
     @Column
+    @Parsed
     private String region;
     @Column
+    @Parsed
     private String currency;
     @Column
+    @Parsed
     private Long area;
 
     public String getName() {

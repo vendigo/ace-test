@@ -1,6 +1,7 @@
 package test.app.product;
 
 import com.google.common.base.MoreObjects;
+import com.univocity.parsers.annotations.Parsed;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,16 +13,22 @@ import java.util.Objects;
 public class Product {
     @Id
     @Column
+    @Parsed
     private Long id;
     @Column
+    @Parsed
     private String name;
     @Column
+    @Parsed
     private String description;
     @Column
+    @Parsed
     private Double price;
     @Column
+    @Parsed
     private Date insertDate;
     @Column
+    @Parsed
     private Date lastUpdateTime;
 
     public Long getId() {
