@@ -10,7 +10,6 @@ import static java.util.stream.Collectors.toList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.util.StringUtils.isEmpty;
 
 public class DbDataMatcher {
 
@@ -28,7 +27,7 @@ public class DbDataMatcher {
     private static Map<String, Object> parseExpectedResults(Map<String, String> map) {
         Map<String, Object> result = new HashMap<>();
         map.entrySet().stream()
-                .filter(column -> !isEmpty(column.getValue()))
+                .filter(column -> parseObject(column.getValue()) != null)
                 .forEach(column -> result.put(column.getKey().toUpperCase(), parseObject(column.getValue())));
         return result;
     }

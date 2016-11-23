@@ -4,6 +4,7 @@ CREATE TABLE Country
   capital VARCHAR(50),
   region VARCHAR(50),
   currency VARCHAR(3),
-  area BIGINT
+  area BIGINT,
+  independenceDay DATE
 )
 
