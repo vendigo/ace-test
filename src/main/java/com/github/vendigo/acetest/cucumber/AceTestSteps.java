@@ -16,6 +16,7 @@ import java.util.Map;
 
 import static com.github.vendigo.acetest.db.assertion.DbDataMatcher.assertData;
 import static com.github.vendigo.acetest.db.assertion.DbDataMatcher.collectColumnNames;
+import static com.github.vendigo.acetest.files.FileMatcher.assertFileLines;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
@@ -92,10 +93,10 @@ public class AceTestSteps {
         assertThat(crudService.count(dbName, tableName), equalTo(0));
     }
 
-    @Then("^Folder (.*) will have files:$")
+    @Then("^Folder (.*) will have files: (.*)$")
     public void folderHasFiles(String folderName, List<String> expectedFileNames) {
         List<String> actualFileNames = fileManager.fileList(folderName);
-        assertThat(actualFileNames, containsInAnyOrder(expectedFileNames));
+        assertThat(actualFileNames, containsInAnyOrder(expectedFileNames.toArray()));
         assertThat(actualFileNames, hasSize(expectedFileNames.size()));
     }
 
@@ -108,6 +109,6 @@ public class AceTestSteps {
     @Then("File (.*) in folder (.*) will have lines:")
     public void fileHasLines(String fileName, String folderName, List<String> expectedLines) throws Exception {
         List<String> actualLines = fileManager.readFile(folderName, fileName);
-        assertThat(actualLines, equalTo(expectedLines));
+        assertFileLines(actualLines, expectedLines);
     }
 }

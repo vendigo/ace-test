@@ -1,6 +1,7 @@
 package test.app.product;
 
 import com.google.common.base.MoreObjects;
+import com.univocity.parsers.annotations.Format;
 import com.univocity.parsers.annotations.Parsed;
 
 import javax.persistence.Column;
@@ -23,12 +24,15 @@ public class Product {
     private String description;
     @Column
     @Parsed
+    @Format(formats = "#0.00", options = "decimalSeparator=.")
     private Double price;
     @Column
     @Parsed
+    @Format(formats = "yyyy-MM-dd")
     private Date insertDate;
     @Column
     @Parsed
+    @Format(formats = "yyyy-MM-dd")
     private Date lastUpdateTime;
 
     public Long getId() {
