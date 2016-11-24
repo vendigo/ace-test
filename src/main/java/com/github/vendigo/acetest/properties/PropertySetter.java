@@ -1,5 +1,6 @@
 package com.github.vendigo.acetest.properties;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@Slf4j
 public class PropertySetter {
     public static final String EQUAL_SIGN = "=";
     private Map<String, String> placeholders = new HashMap<>();
@@ -18,7 +20,7 @@ public class PropertySetter {
             String value = split[1];
             if (key != null && value != null) {
                 value = resolvePlaceholders(value);
-                System.out.println("Setting property: "+key+"="+value);
+                log.info("Setting property: {}={}", key, value);
                 System.setProperty(key, value);
             }
         });

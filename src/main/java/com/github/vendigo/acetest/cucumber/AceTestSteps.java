@@ -5,6 +5,8 @@ import com.github.vendigo.acetest.db.dao.CrudService;
 import com.github.vendigo.acetest.files.FileManager;
 import com.github.vendigo.acetest.properties.PropertySetter;
 import com.github.vendigo.acetest.run.AppRunner;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -34,6 +36,16 @@ public class AceTestSteps {
     AppRunner appRunner;
     @Autowired
     FileManager fileManager;
+
+    @Before
+    public void setUp() {
+        fileManager.createFolders();
+    }
+
+    @After
+    public void tearDown() {
+        fileManager.deleteTempFolder();
+    }
 
     @Given("^Properties:$")
     public void properties(List<String> lines) {
@@ -68,6 +80,11 @@ public class AceTestSteps {
     @When("^Application (.*) run with params: (.*)$")
     public void applicationRun(String appName, String params) throws Exception {
         appRunner.runApplication(appName, params);
+    }
+
+    @When("^Application (.*) run$")
+    public void applicationRun(String appName) throws Exception {
+        appRunner.runApplication(appName, "");
     }
 
     @Then("^Table (.*) will have records:$")

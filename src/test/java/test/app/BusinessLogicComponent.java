@@ -29,9 +29,9 @@ public class BusinessLogicComponent {
     @Autowired
     private CountryParser countryParser;
 
-    public void run() {
+    public void run(boolean disableAreaLimit) {
         List<Country> bigCountries = countryParser.parseCountriesCsv().stream()
-                .filter(country -> country.getArea() > areaLimit)
+                .filter(country -> disableAreaLimit || country.getArea() > areaLimit)
                 .collect(Collectors.toList());
         countryRepository.save(bigCountries);
 

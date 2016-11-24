@@ -4,8 +4,9 @@ import com.github.vendigo.acetest.config.Config;
 import com.github.vendigo.acetest.config.DatasourceConfig;
 import com.github.vendigo.acetest.db.dao.CrudMapper;
 import com.google.common.collect.Iterables;
-import liquibase.exception.LiquibaseException;
 import liquibase.integration.spring.SpringLiquibase;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -20,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@Slf4j
 public class DatasourceContext {
     public static final String H2_DRIVER_CLASSNAME = "org.h2.Driver";
     public static final String H2_DEFAULT_SCHEMA = "PUBLIC";
@@ -30,10 +32,11 @@ public class DatasourceContext {
     Config config;
 
     @PostConstruct
-    public void init() throws Exception {
+    public void init() {
         for (DatasourceConfig dsConfig : config.getDatasources()) {
             DataSource datasource = createDatasource(dsConfig);
             if (dsConfig.getSchemaFile() != null) {
+                log.info("Applying {} to {}", dsConfig.getSchemaFile(), dsConfig.getDbName());
                 sqlFileRunner.applySchemaFile(dsConfig.getSchemaFile(), datasource);
             }
 
@@ -45,7 +48,9 @@ public class DatasourceContext {
         }
     }
 
-    private void applyLiquibase(DatasourceConfig dsConfig, DataSource datasource) throws LiquibaseException {
+    @SneakyThrows
+    private void applyLiquibase(DatasourceConfig dsConfig, DataSource datasource) {
+        log.info("Applying {} to {}", dsConfig.getLiquibaseConfig(), dsConfig.getDbName());
         SpringLiquibase springLiquibase = new SpringLiquibase();
         springLiquibase.setDataSource(datasource);
         springLiquibase.setChangeLog(dsConfig.getLiquibaseConfig());
@@ -54,7 +59,8 @@ public class DatasourceContext {
         springLiquibase.afterPropertiesSet();
     }
 
-    private void createSqlSessionFactory(DatasourceConfig dsConfig, DataSource datasource) throws Exception {
+    @SneakyThrows
+    private void createSqlSessionFactory(DatasourceConfig dsConfig, DataSource datasource) {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(datasource);
         Configuration configuration = new Configuration();
@@ -64,6 +70,7 @@ public class DatasourceContext {
     }
 
     private DataSource createDatasource(DatasourceConfig dsConfig) {
+        log.info("Creating dataSource {}", dsConfig.getDbName());
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(H2_DRIVER_CLASSNAME);
         dataSource.setUrl(dsConfig.getUrl());

@@ -2,17 +2,18 @@ package com.github.vendigo.acetest.files;
 
 import com.github.vendigo.acetest.config.Config;
 import com.github.vendigo.acetest.properties.PropertySetter;
+import lombok.SneakyThrows;
 import org.junit.rules.TemporaryFolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -27,32 +28,33 @@ public class FileManager {
     private TemporaryFolder tempFolder;
     private Map<String, File> folders = new HashMap<>();
 
-    @PostConstruct
-    public void createFolders() throws IOException {
+    @SneakyThrows
+    public void createFolders() {
         if (config.getFolders() != null) {
             tempFolder = new TemporaryFolder();
             tempFolder.create();
             for (String folderName : config.getFolders()) {
                 File folder = tempFolder.newFolder(folderName);
-                propertySetter.addPlaceholder(folderName+TEST_DIR_SUFFIX, folder.getAbsolutePath());
+                propertySetter.addPlaceholder(folderName + TEST_DIR_SUFFIX, folder.getAbsolutePath());
                 folders.put(folderName, folder);
             }
         }
     }
 
-    @PreDestroy
     public void deleteTempFolder() {
         if (tempFolder != null) {
             tempFolder.delete();
         }
     }
 
-    public void createTestFile(String folderName, String fileName, List<String> lines) throws IOException {
+    @SneakyThrows
+    public void createTestFile(String folderName, String fileName, List<String> lines) {
         Path newFilePath = folders.get(folderName).toPath().resolve(fileName);
         Files.write(newFilePath, lines);
     }
 
-    public List<String> readFile(String folderName, String fileName) throws IOException {
+    @SneakyThrows
+    public List<String> readFile(String folderName, String fileName) {
         Path filePath = folders.get(folderName).toPath().resolve(fileName);
         return Files.lines(filePath).collect(toList());
     }
