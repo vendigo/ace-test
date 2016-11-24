@@ -16,7 +16,7 @@ public interface CrudMapper {
     List<Map<String, Object>> select(String tableName, Collection<String> columnNames);
 
     @InsertProvider(type = CrudSqlProvider.class, method = "insertOne")
-    void insertOne(String tableName, Map<String, String> row);
+    void insertOne(String tableName, Map<String, Object> row);
 
     @SelectProvider(type = CrudSqlProvider.class, method = "count")
     int count(String tableName);

@@ -3,6 +3,9 @@ package com.github.vendigo.acetest.db.assertion;
 import org.hamcrest.text.IsEmptyString;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneId;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -86,5 +89,21 @@ public class DbDataFormatterTest {
         Object result = DbDataFormatter.adjustNumber("Hello");
         assertThat(result, instanceOf(String.class));
         assertThat(result, equalTo("Hello"));
+    }
+
+    @Test
+    public void formatDbDate() throws Exception {
+        LocalDateTime localDateTime = LocalDateTime.of(2016, Month.NOVEMBER, 24, 0, 0);
+        Date date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        String formattedDate = DbDataFormatter.formatDateTime(date);
+        assertThat(formattedDate, equalTo("2016-11-24"));
+    }
+
+    @Test
+    public void formatDbDateTime() throws Exception {
+        LocalDateTime localDateTime = LocalDateTime.of(2016, Month.NOVEMBER, 24, 8, 25);
+        Date date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        String formattedDate = DbDataFormatter.formatDateTime(date);
+        assertThat(formattedDate, equalTo("2016-11-24 08:25:00.00"));
     }
 }

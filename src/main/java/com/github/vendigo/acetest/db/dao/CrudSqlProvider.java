@@ -1,8 +1,10 @@
 package com.github.vendigo.acetest.db.dao;
 
+import com.github.vendigo.acetest.db.assertion.DbDataFormatter;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 
 import static java.util.stream.Collectors.joining;
@@ -21,11 +23,13 @@ public class CrudSqlProvider {
         }}.toString();
     }
 
-    public String insertOne(String tablename, Map<String, String> row) {
+    public String insertOne(String tableName, Map<String, Object> row) {
         return new SQL() {{
-            INSERT_INTO(tablename);
+            INSERT_INTO(tableName);
             VALUES(row.keySet().stream().collect(joining(", ")),
-                    row.values().stream().map(s -> quote(s)).collect(joining(", ")));
+                    row.values().stream()
+                            .map(s -> quote(s))
+                            .collect(joining(", ")));
         }}.toString();
     }
 
@@ -36,7 +40,12 @@ public class CrudSqlProvider {
         }}.toString();
     }
 
-    private String quote(String str) {
-        return "'"+str+"'";
+    private String quote(Object o) {
+        String str = o.toString();
+        if (o instanceof Date) {
+            str = DbDataFormatter.formatDateTime((Date)o);
+        }
+
+        return "'"+ str +"'";
     }
 }
