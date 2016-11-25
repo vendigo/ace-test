@@ -5,6 +5,7 @@ import com.github.vendigo.acetest.db.dao.CrudService;
 import com.github.vendigo.acetest.files.FileManager;
 import com.github.vendigo.acetest.properties.PropertySetter;
 import com.github.vendigo.acetest.run.AppRunner;
+import com.github.vendigo.acetest.run.ExceptionMatcher;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -21,8 +22,7 @@ import static com.github.vendigo.acetest.db.assertion.DbDataMatcher.assertData;
 import static com.github.vendigo.acetest.db.assertion.DbDataMatcher.collectColumnNames;
 import static com.github.vendigo.acetest.files.FileMatcher.assertFileLines;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 @ContextConfiguration(classes = SpringConfig.class)
@@ -77,14 +77,30 @@ public class AceTestSteps {
         fileManager.createTestFile(folderName, fileName, lines);
     }
 
-    @When("^Application (.*) run with params: (.*)$")
-    public void applicationRun(String appName, String params) throws Exception {
-        appRunner.runApplication(appName, params);
+    @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
+    @When("^Application (.*) runs with params: '(.*)'$")
+    public void applicationRun(String appName, String params) throws Throwable {
+        appRunner.runApplication(appName, params, false);
     }
 
-    @When("^Application (.*) run$")
-    public void applicationRun(String appName) throws Exception {
-        appRunner.runApplication(appName, "");
+    @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
+    @When("^Application (.*) runs$")
+    public void applicationRun(String appName) throws Throwable {
+        appRunner.runApplication(appName, "", false);
+    }
+
+    @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
+    @When("^Application (.*) runs with params: '(.*)', it fails with exception: (.*)$")
+    public void applicationFails(String appName, String params, String stackTraceContains) throws Throwable {
+        Throwable throwable = appRunner.runApplication(appName, params, true);
+        ExceptionMatcher.matchException(throwable, stackTraceContains);
+    }
+
+    @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
+    @When("^Application (.*) runs, it fails with exception: (.*)$")
+    public void applicationRunFails(String appName, String stackTraceContains) throws Throwable {
+        Throwable throwable = appRunner.runApplication(appName, "", true);
+        ExceptionMatcher.matchException(throwable, stackTraceContains);
     }
 
     @Then("^Table (.*) will have records:$")

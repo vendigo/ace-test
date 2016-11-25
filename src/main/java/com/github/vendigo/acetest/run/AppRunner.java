@@ -2,7 +2,6 @@ package com.github.vendigo.acetest.run;
 
 import com.github.vendigo.acetest.config.Config;
 import com.github.vendigo.acetest.config.LauncherConfig;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,25 +16,33 @@ public class AppRunner {
     @Autowired
     Config config;
 
-    public void runApplication(String appName, String params) {
+    public Throwable runApplication(String appName, String params, boolean catchExceptions) throws Throwable {
         Optional<LauncherConfig> launcherConfig = config.getLaunchers()
                 .stream()
                 .filter(l -> l.getAppName().equals(appName))
                 .findAny();
         if (launcherConfig.isPresent()) {
             String className = launcherConfig.get().getClassName();
-            run(className, params);
+            return run(className, params, catchExceptions);
         } else {
             throw new IllegalArgumentException("Unknown appName");
         }
     }
 
-    @SneakyThrows
-    private void run(String className, String params) {
-        log.info("Running {} with params: {}", className, params);
-        Class<?> appClass = Class.forName(className);
-        Method mainMethod = appClass.getMethod("main", String[].class);
-        String[] args = params.split(SPACE);
-        mainMethod.invoke(null, (Object) args);
+    private Throwable run(String className, String params, boolean catchExceptions) throws Throwable {
+        try {
+            log.info("Running {} with params: {}", className, params);
+            Class<?> appClass = Class.forName(className);
+            Method mainMethod = appClass.getMethod("main", String[].class);
+            String[] args = params.split(SPACE);
+            mainMethod.invoke(null, (Object) args);
+        } catch (Throwable t) {
+            if (catchExceptions) {
+                return t;
+            } else {
+                throw t;
+            }
+        }
+        return null;
     }
 }
