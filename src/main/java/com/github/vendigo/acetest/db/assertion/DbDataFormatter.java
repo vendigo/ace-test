@@ -20,19 +20,19 @@ public class DbDataFormatter {
     private static Format dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private static Format numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
 
-    public static List<Map<String, Object>> parseRecords(List<Map<String, String>> rawRecords) {
+    public static List<Map<String, Object>> parseRecordsForInsert(List<Map<String, String>> rawRecords) {
         return rawRecords.stream()
-                .map(DbDataFormatter::parseRow)
+                .map(DbDataFormatter::parseRowForInsert)
                 .collect(toList());
     }
 
-    public static List<Map<String, Object>> adjustRecords(List<Map<String, Object>> rawRecords) {
+    public static List<Map<String, Object>> adjustRecordsForAssert(List<Map<String, Object>> rawRecords) {
         return rawRecords.stream()
-                .map(DbDataFormatter::adjustRow)
+                .map(DbDataFormatter::adjustRowForAssert)
                 .collect(toList());
     }
 
-    static Map<String, Object> parseRow(Map<String, String> map) {
+    static Map<String, Object> parseRowForInsert(Map<String, String> map) {
         Map<String, Object> result = new HashMap<>();
         map.entrySet().stream()
                 .filter(column -> parseObject(column.getValue()) != null)
@@ -40,10 +40,10 @@ public class DbDataFormatter {
         return result;
     }
 
-    static Map<String, Object> adjustRow(Map<String, Object> map) {
+    static Map<String, Object> adjustRowForAssert(Map<String, Object> map) {
         Map<String, Object> result = new HashMap<>();
         map.entrySet().stream()
-                .forEach(column -> result.put(column.getKey(), adjustObject(column.getValue())));
+                .forEach(column -> result.put(column.getKey(), adjustObjectForAssert(column.getValue())));
         return result;
     }
 
@@ -61,7 +61,7 @@ public class DbDataFormatter {
         return parsed.orElse(str);
     }
 
-    static Object adjustObject(Object o) {
+    static Object adjustObjectForAssert(Object o) {
         if (o instanceof Number) {
             Number n = (Number) o;
             if (n instanceof Integer) {

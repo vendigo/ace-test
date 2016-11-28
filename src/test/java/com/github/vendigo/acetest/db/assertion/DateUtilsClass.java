@@ -43,6 +43,18 @@ public class DateUtilsClass {
         assertThat(result, instanceOf(LocalDate.class));
     }
 
+    @Test
+    public void parseDate() throws Exception {
+        Object result = DateUtils.parseDate("2016-11-28");
+        assertThat(result, instanceOf(LocalDate.class));
+    }
+
+    @Test
+    public void parseDateTime() throws Exception {
+        Object result = DateUtils.parseDate("2016-11-28 15:00");
+        assertThat(result, instanceOf(LocalDateTime.class));
+    }
+
     private Date getDate(int year, Month month, int day, int hours, int minutes) {
         LocalDateTime localDateTime = LocalDateTime.of(year, month, day, hours, minutes);
         return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());

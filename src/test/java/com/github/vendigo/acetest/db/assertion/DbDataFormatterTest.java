@@ -62,28 +62,28 @@ public class DbDataFormatterTest {
 
     @Test
     public void adjustInteger() throws Exception {
-        Object result = DbDataFormatter.adjustObject(100);
+        Object result = DbDataFormatter.adjustObjectForAssert(100);
         assertThat(result, instanceOf(Long.class));
         assertThat(result, equalTo(100L));
     }
 
     @Test
     public void adjustDouble() throws Exception {
-        Object result = DbDataFormatter.adjustObject(100.5);
+        Object result = DbDataFormatter.adjustObjectForAssert(100.5);
         assertThat(result, instanceOf(Double.class));
         assertThat(result, equalTo(100.5));
     }
 
     @Test
     public void adjustDoubleToLong() throws Exception {
-        Object result = DbDataFormatter.adjustObject(100.0);
+        Object result = DbDataFormatter.adjustObjectForAssert(100.0);
         assertThat(result, instanceOf(Long.class));
         assertThat(result, equalTo(100L));
     }
 
     @Test
     public void adjustString() throws Exception {
-        Object result = DbDataFormatter.adjustObject("Hello");
+        Object result = DbDataFormatter.adjustObjectForAssert("Hello");
         assertThat(result, instanceOf(String.class));
         assertThat(result, equalTo("Hello"));
     }

@@ -17,7 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import java.util.List;
 import java.util.Map;
 
-import static com.github.vendigo.acetest.db.assertion.DbDataFormatter.parseRecords;
+import static com.github.vendigo.acetest.db.assertion.DbDataFormatter.parseRecordsForInsert;
 import static com.github.vendigo.acetest.db.assertion.DbDataMatcher.assertData;
 import static com.github.vendigo.acetest.db.assertion.DbDataMatcher.collectColumnNames;
 import static com.github.vendigo.acetest.files.FileMatcher.assertFileLines;
@@ -65,13 +65,13 @@ public class AceTestSteps {
     @Given("^Table (.*) with records:$")
     public void tableWithRecordsOneDb(String tableName, List<Map<String, String>> records) {
         crudService.deleteAll(tableName);
-        crudService.insert(tableName, parseRecords(records));
+        crudService.insert(tableName, parseRecordsForInsert(records));
     }
 
     @Given("^(.*) table (.*) with records:$")
     public void tableWithRecords(String dbName, String tableName, List<Map<String, String>> records) {
         crudService.deleteAll(dbName, tableName);
-        crudService.insert(dbName, tableName, parseRecords(records));
+        crudService.insert(dbName, tableName, parseRecordsForInsert(records));
     }
 
     @Given("^File (.*) in folder (.*) with lines:$")

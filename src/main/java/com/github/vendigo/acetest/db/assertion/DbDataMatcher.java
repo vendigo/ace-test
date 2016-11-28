@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static com.github.vendigo.acetest.db.assertion.DbDataFormatter.adjustRecords;
-import static com.github.vendigo.acetest.db.assertion.DbDataFormatter.parseRecords;
+import static com.github.vendigo.acetest.db.assertion.DbDataFormatter.adjustRecordsForAssert;
+import static com.github.vendigo.acetest.db.assertion.DbDataFormatter.parseRecordsForInsert;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
@@ -16,8 +16,8 @@ import static org.hamcrest.Matchers.hasSize;
 public class DbDataMatcher {
 
     public static void assertData(List<Map<String, Object>> actualResults, List<Map<String, String>> expectedResults) {
-        List<Map<String, Object>> expected = parseRecords(expectedResults);
-        List<Map<String, Object>> actual = adjustRecords(actualResults);
+        List<Map<String, Object>> expected = parseRecordsForInsert(expectedResults);
+        List<Map<String, Object>> actual = adjustRecordsForAssert(actualResults);
         assertThat(actual, containsInAnyOrder(expected.toArray()));
         assertThat(actual, hasSize(expected.size()));
     }
