@@ -1,12 +1,12 @@
 package com.github.vendigo.acetest.db.dao;
 
-import com.github.vendigo.acetest.db.assertion.DbDataFormatter;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
+import static com.github.vendigo.acetest.db.assertion.DateUtils.formatDateTime;
 import static java.util.stream.Collectors.joining;
 
 public class CrudSqlProvider {
@@ -43,7 +43,7 @@ public class CrudSqlProvider {
     private String quote(Object o) {
         String str = o.toString();
         if (o instanceof Date) {
-            str = DbDataFormatter.formatDateTime((Date)o);
+            str =formatDateTime((Date)o);
         }
 
         return "'"+ str +"'";

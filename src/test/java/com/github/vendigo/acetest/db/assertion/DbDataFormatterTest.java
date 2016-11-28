@@ -3,9 +3,6 @@ package com.github.vendigo.acetest.db.assertion;
 import org.hamcrest.text.IsEmptyString;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.ZoneId;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -65,45 +62,29 @@ public class DbDataFormatterTest {
 
     @Test
     public void adjustInteger() throws Exception {
-        Object result = DbDataFormatter.adjustNumber(100);
+        Object result = DbDataFormatter.adjustObject(100);
         assertThat(result, instanceOf(Long.class));
         assertThat(result, equalTo(100L));
     }
 
     @Test
     public void adjustDouble() throws Exception {
-        Object result = DbDataFormatter.adjustNumber(100.5);
+        Object result = DbDataFormatter.adjustObject(100.5);
         assertThat(result, instanceOf(Double.class));
         assertThat(result, equalTo(100.5));
     }
 
     @Test
     public void adjustDoubleToLong() throws Exception {
-        Object result = DbDataFormatter.adjustNumber(100.0);
+        Object result = DbDataFormatter.adjustObject(100.0);
         assertThat(result, instanceOf(Long.class));
         assertThat(result, equalTo(100L));
     }
 
     @Test
     public void adjustString() throws Exception {
-        Object result = DbDataFormatter.adjustNumber("Hello");
+        Object result = DbDataFormatter.adjustObject("Hello");
         assertThat(result, instanceOf(String.class));
         assertThat(result, equalTo("Hello"));
-    }
-
-    @Test
-    public void formatDbDate() throws Exception {
-        LocalDateTime localDateTime = LocalDateTime.of(2016, Month.NOVEMBER, 24, 0, 0);
-        Date date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-        String formattedDate = DbDataFormatter.formatDateTime(date);
-        assertThat(formattedDate, equalTo("2016-11-24"));
-    }
-
-    @Test
-    public void formatDbDateTime() throws Exception {
-        LocalDateTime localDateTime = LocalDateTime.of(2016, Month.NOVEMBER, 24, 8, 25);
-        Date date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-        String formattedDate = DbDataFormatter.formatDateTime(date);
-        assertThat(formattedDate, equalTo("2016-11-24 08:25:00.00"));
     }
 }

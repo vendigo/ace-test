@@ -64,11 +64,13 @@ public class AceTestSteps {
 
     @Given("^Table (.*) with records:$")
     public void tableWithRecordsOneDb(String tableName, List<Map<String, String>> records) {
+        crudService.deleteAll(tableName);
         crudService.insert(tableName, parseRecords(records));
     }
 
     @Given("^(.*) table (.*) with records:$")
     public void tableWithRecords(String dbName, String tableName, List<Map<String, String>> records) {
+        crudService.deleteAll(dbName, tableName);
         crudService.insert(dbName, tableName, parseRecords(records));
     }
 
@@ -134,7 +136,7 @@ public class AceTestSteps {
         assertThat(actualFileNames, hasSize(expectedFileNames.size()));
     }
 
-    @Then("^Folder (.*) will be empty:$")
+    @Then("^Folder (.*) will be empty$")
     public void folderIsEmpty(String folderName) {
         List<String> actualFileNames = fileManager.fileList(folderName);
         assertThat(actualFileNames, hasSize(0));

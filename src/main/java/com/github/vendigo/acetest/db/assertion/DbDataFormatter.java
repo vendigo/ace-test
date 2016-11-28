@@ -5,9 +5,6 @@ import java.text.Format;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -15,15 +12,13 @@ import static com.google.common.math.DoubleMath.roundToLong;
 import static java.util.stream.Collectors.toList;
 
 public class DbDataFormatter {
-    public static final String NULL_PLACEHOLDER = "<null>";
-    public static final String EMPTY_STRING_PLACEHOLDER = "<empty>";
+    public static final String NULL_PLACEHOLDER = "{null}";
+    public static final String EMPTY_STRING_PLACEHOLDER = "{empty}";
     public static final String EMPTY_STRING = "";
 
     private static Format dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static Format dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private static Format numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
-
-    private static DateTimeFormatter outDateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SS");
 
     public static List<Map<String, Object>> parseRecords(List<Map<String, String>> rawRecords) {
         return rawRecords.stream()
@@ -37,18 +32,6 @@ public class DbDataFormatter {
                 .collect(toList());
     }
 
-    public static String formatDateTime(Date date) {
-        LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
-        int hour = localDateTime.getHour();
-        int minute = localDateTime.getMinute();
-        int second = localDateTime.getSecond();
-        if (hour + minute + second == 0) {
-            return localDateTime.format(DateTimeFormatter.ISO_DATE);
-        } else {
-            return localDateTime.format(outDateTimeFormat);
-        }
-    }
-
     static Map<String, Object> parseRow(Map<String, String> map) {
         Map<String, Object> result = new HashMap<>();
         map.entrySet().stream()
@@ -60,7 +43,7 @@ public class DbDataFormatter {
     static Map<String, Object> adjustRow(Map<String, Object> map) {
         Map<String, Object> result = new HashMap<>();
         map.entrySet().stream()
-                .forEach(column -> result.put(column.getKey(), adjustNumber(column.getValue())));
+                .forEach(column -> result.put(column.getKey(), adjustObject(column.getValue())));
         return result;
     }
 
@@ -78,7 +61,7 @@ public class DbDataFormatter {
         return parsed.orElse(str);
     }
 
-    static Object adjustNumber(Object o) {
+    static Object adjustObject(Object o) {
         if (o instanceof Number) {
             Number n = (Number) o;
             if (n instanceof Integer) {
