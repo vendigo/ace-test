@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
-import static com.github.vendigo.acetest.db.assertion.DateUtils.formatDateTime;
+import static com.github.vendigo.acetest.conversion.DateConversions.formatDateTime;
 import static java.util.stream.Collectors.joining;
 
 public class CrudSqlProvider {

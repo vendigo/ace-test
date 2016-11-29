@@ -49,13 +49,13 @@ public class DbDataFormatterTest {
 
     @Test
     public void parseNullPlaceholder() throws Exception {
-        Object parsed = DbDataFormatter.parseObject("<null>");
+        Object parsed = DbDataFormatter.parseObject("{null}");
         assertThat(parsed, nullValue());
     }
 
     @Test
     public void parseEmptyStringPlaceholder() throws Exception {
-        Object parsed = DbDataFormatter.parseObject("<empty>");
+        Object parsed = DbDataFormatter.parseObject("{empty}");
         assertThat(parsed, instanceOf(String.class));
         assertThat((String)parsed, IsEmptyString.isEmptyString());
     }
