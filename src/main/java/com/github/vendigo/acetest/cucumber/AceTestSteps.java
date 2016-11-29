@@ -5,7 +5,7 @@ import com.github.vendigo.acetest.db.dao.CrudService;
 import com.github.vendigo.acetest.files.FileManager;
 import com.github.vendigo.acetest.properties.PropertySetter;
 import com.github.vendigo.acetest.run.AppRunner;
-import com.github.vendigo.acetest.run.ExceptionMatcher;
+import com.github.vendigo.acetest.assertion.ExceptionMatcher;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -17,12 +17,13 @@ import org.springframework.test.context.ContextConfiguration;
 import java.util.List;
 import java.util.Map;
 
-import static com.github.vendigo.acetest.db.assertion.DbDataFormatter.parseRecordsForInsert;
-import static com.github.vendigo.acetest.db.assertion.DbDataMatcher.assertData;
-import static com.github.vendigo.acetest.db.assertion.DbDataMatcher.collectColumnNames;
+import static com.github.vendigo.acetest.conversion.DataConverter.parseDataForInsert;
+import static com.github.vendigo.acetest.assertion.DbDataMatcher.assertData;
+import static com.github.vendigo.acetest.assertion.DbDataMatcher.collectColumnNames;
 import static com.github.vendigo.acetest.files.FileMatcher.assertFileLines;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 @ContextConfiguration(classes = SpringConfig.class)
@@ -65,13 +66,13 @@ public class AceTestSteps {
     @Given("^Table (.*) with records:$")
     public void tableWithRecordsOneDb(String tableName, List<Map<String, String>> records) {
         crudService.deleteAll(tableName);
-        crudService.insert(tableName, parseRecordsForInsert(records));
+        crudService.insert(tableName, parseDataForInsert(records));
     }
 
     @Given("^(.*) table (.*) with records:$")
     public void tableWithRecords(String dbName, String tableName, List<Map<String, String>> records) {
         crudService.deleteAll(dbName, tableName);
-        crudService.insert(dbName, tableName, parseRecordsForInsert(records));
+        crudService.insert(dbName, tableName, parseDataForInsert(records));
     }
 
     @Given("^File (.*) in folder (.*) with lines:$")

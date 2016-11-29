@@ -3,10 +3,8 @@ package com.github.vendigo.acetest.db.dao;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.Map;
 
-import static com.github.vendigo.acetest.conversion.DateConversions.formatDateTime;
 import static java.util.stream.Collectors.joining;
 
 public class CrudSqlProvider {
@@ -23,7 +21,7 @@ public class CrudSqlProvider {
         }}.toString();
     }
 
-    public String insertOne(String tableName, Map<String, Object> row) {
+    public String insertOne(String tableName, Map<String, String> row) {
         return new SQL() {{
             INSERT_INTO(tableName);
             VALUES(row.keySet().stream().collect(joining(", ")),
@@ -40,12 +38,7 @@ public class CrudSqlProvider {
         }}.toString();
     }
 
-    private String quote(Object o) {
-        String str = o.toString();
-        if (o instanceof Date) {
-            str =formatDateTime((Date)o);
-        }
-
+    private String quote(String str) {
         return "'"+ str +"'";
     }
 }

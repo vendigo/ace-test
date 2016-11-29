@@ -2,6 +2,7 @@ package com.github.vendigo.acetest.conversion;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -13,7 +14,7 @@ public class DateConversions {
     private static DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     /**
-     * Parses LocalDate or LocalDateTime from the String (Scenario -> assertion)
+     * Parses LocalDate or LocalDateTime from the String (from Scenario to Assertion)
      */
     public static Object parseDate(String str) {
         try {
@@ -28,7 +29,7 @@ public class DateConversions {
     }
 
     /**
-     * Format LocalDate for inserting into as String.
+     * Format LocalDate for inserting into db as String.
      */
     public static String formatLocalDate(LocalDate localDate) {
         return localDate.format(dateFormat);
@@ -42,25 +43,10 @@ public class DateConversions {
     }
 
     /**
-     * Format Date for inserting into db as String.
-     */
-    public static String formatDateTime(Date date) {
-        LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
-        int hour = localDateTime.getHour();
-        int minute = localDateTime.getMinute();
-        int second = localDateTime.getSecond();
-        if (hour + minute + second == 0) {
-            return localDateTime.format(DateTimeFormatter.ISO_DATE);
-        } else {
-            return localDateTime.format(outDateTimeFormat);
-        }
-    }
-
-    /**
-     * Convert Date to LocalDate or LocalDateTime based on time. (Db -> Assertion)
+     * Convert Date to LocalDate or LocalDateTime based on time. (from Db to Assertion)
      */
     public static Object convertDate(Date date) {
-        LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        LocalDateTime localDateTime = toLocalDate(date);
         int hour = localDateTime.getHour();
         int minute = localDateTime.getMinute();
         int second = localDateTime.getSecond();
@@ -69,5 +55,13 @@ public class DateConversions {
         } else {
             return localDateTime;
         }
+    }
+
+    private static LocalDateTime toLocalDate(Date date) {
+        if (date instanceof java.sql.Date) {
+            LocalDate localDate = ((java.sql.Date) date).toLocalDate();
+            return LocalDateTime.of(localDate, LocalTime.of(0, 0));
+        }
+        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
     }
 }

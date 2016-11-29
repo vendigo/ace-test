@@ -52,7 +52,7 @@ Feature: Sample
   Scenario: Too many parameters
     When Application TestApp runs with params: '-disableAreaLimit -anotherParam', it fails with exception: Too many parameters
 
-  Scenario: Test datetime assertions
+  Scenario: Test datetime assertions and string quotation
     Given Properties:
       | area.limit=400000 |
     And File countries.csv in folder in with lines:
@@ -65,9 +65,11 @@ Feature: Sample
       | 1  | Mi Band 1s                 | Fitness band from Xiaomi, 1nd generation | 949.99 | 2016-05-20 | 2016-11-05 20:00 |
       | 2  | Mi Band 2                  | Fitness band from Xiaomi, 2nd generation | 429.00 | 2015-02-22 | 2016-11-06 16:30 |
       | 3  | Xiaomi Huami Amazfit Watch | {empty}                                  | 4499   | 2016-11-02 | 2016-11-02 10:35 |
+      | 4  | "2048"                     | Interactive game 2048                    | 200.5  | 2016-11-25 | 2016-11-26 08:01 |
     When Application TestApp runs
     Then Table Product will have records:
       | id | name                       | description                              | price  | insertDate | lastUpdateTime   |
       | 1  | Mi Band 1s                 | Fitness band from Xiaomi, 1nd generation | 949.99 | 2016-05-20 | 2016-11-05 20:00 |
       | 2  | Mi Band 2                  | Fitness band from Xiaomi, 2nd generation | 429.00 | 2015-02-22 | 2016-11-06 16:30 |
       | 3  | Xiaomi Huami Amazfit Watch | {empty}                                  | 4499   | 2016-11-02 | 2016-11-02 10:35 |
+      | 4  | "2048"                     | Interactive game 2048                    | 200.5  | 2016-11-25 | 2016-11-26 08:01 |

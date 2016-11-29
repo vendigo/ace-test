@@ -1,4 +1,4 @@
-package com.github.vendigo.acetest.run;
+package com.github.vendigo.acetest.assertion;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

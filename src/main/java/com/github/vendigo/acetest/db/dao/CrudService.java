@@ -24,11 +24,11 @@ public class CrudService {
         doVoidQuery(dbName, crudMapper -> crudMapper.deleteAll(tableName));
     }
 
-    public void insert(String tableName, List<Map<String, Object>> rows) {
+    public void insert(String tableName, List<Map<String, String>> rows) {
         insert(datasourceContext.getOnlyDbName(), tableName, rows);
     }
 
-    public void insert(String dbName, String tableName, List<Map<String, Object>> rows) {
+    public void insert(String dbName, String tableName, List<Map<String, String>> rows) {
         doVoidQuery(dbName, crudMapper -> rows.forEach(row -> crudMapper.insertOne(tableName, row)));
     }
 

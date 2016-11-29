@@ -8,22 +8,23 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
-public class DataConvertor {
+public class DataConverter {
     public static List<Map<String, Object>> parseDataForAssertions(List<Map<String, String>> inputData) {
         return inputData.stream()
-                .map(DataConvertor.parseRow(String::toUpperCase, StringParser::parseString))
+                .map(parseRow(String::toUpperCase, StringParser::parseString))
                 .collect(toList());
     }
 
     public static List<Map<String, Object>> convertDataForAssertions(List<Map<String, Object>> inputData) {
         return inputData.stream()
-                .map(DataConvertor.parseRow(String::toUpperCase, ObjectConverter::convertForAssertion))
+                .map(parseRow(String::toUpperCase, ObjectConverter::convertForAssertion))
                 .collect(Collectors.toList());
     }
 
-    public static List<Map<String, String>> formatDataForInsert(List<Map<String, Object>> inputData) {
+    public static List<Map<String, String>> parseDataForInsert(List<Map<String, String>> inputData) {
         return inputData.stream()
-                .map(DataConvertor.parseRow(String::toUpperCase, ToStringConverter::convertForInserting))
+                .map(parseRow(String::toUpperCase, StringParser::parseString))
+                .map(parseRow(String::toUpperCase, ToStringConverter::convertForInserting))
                 .collect(Collectors.toList());
     }
 

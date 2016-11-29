@@ -9,26 +9,10 @@ import java.time.ZoneId;
 import java.util.Date;
 
 import static com.github.vendigo.acetest.conversion.DateConversions.convertDate;
-import static com.github.vendigo.acetest.conversion.DateConversions.formatDateTime;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
 
 public class DateConversionsTest {
-    @Test
-    public void formatDbDate() throws Exception {
-        Date date = getDate(2016, Month.NOVEMBER, 24, 0, 0);
-        String formattedDate = formatDateTime(date);
-        assertThat(formattedDate, equalTo("2016-11-24"));
-    }
-
-    @Test
-    public void formatDbDateTime() throws Exception {
-        Date date = getDate(2016, Month.NOVEMBER, 24, 8, 25);
-        String formattedDate = formatDateTime(date);
-        assertThat(formattedDate, equalTo("2016-11-24 08:25:00.00"));
-    }
-
     @Test
     public void convertToLocalDateTime() throws Exception {
         Date date = getDate(2016, Month.NOVEMBER, 24, 8, 25);
