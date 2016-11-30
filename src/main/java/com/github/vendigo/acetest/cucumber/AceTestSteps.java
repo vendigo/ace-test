@@ -30,13 +30,13 @@ import static org.hamcrest.core.IsEqual.equalTo;
 public class AceTestSteps {
 
     @Autowired
-    PropertySetter propertySetter;
+    private PropertySetter propertySetter;
     @Autowired
-    CrudService crudService;
+    private CrudService crudService;
     @Autowired
-    AppRunner appRunner;
+    private AppRunner appRunner;
     @Autowired
-    FileManager fileManager;
+    private FileManager fileManager;
 
     @Before
     public void setUp() {
@@ -143,7 +143,7 @@ public class AceTestSteps {
         assertThat(actualFileNames, hasSize(0));
     }
 
-    @Then("File (.*) in folder (.*) will have lines:")
+    @Then("^File (.*) in folder (.*) will have lines:$")
     public void fileHasLines(String fileName, String folderName, List<String> expectedLines) throws Exception {
         List<String> actualLines = fileManager.readFile(folderName, fileName);
         assertFileLines(actualLines, expectedLines);
