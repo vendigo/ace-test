@@ -1,6 +1,6 @@
-# ace-test
+# ACE-TEST
 
-#### Dependency
+### Dependency
 
 ```xml
 <dependency>
@@ -10,7 +10,7 @@
 </dependency>
 ```
 
-#### Configuration
+### Configuration
 
 In test resources create file **ace-test-settings.yaml** with the following structure:
 
@@ -33,7 +33,17 @@ folders:
   - failed
 ```
 
-#### Tips
+### Test launcher
+
+```java
+@RunWith(Cucumber.class)
+@CucumberOptions(glue = {"cucumber.api.spring", "com.github.vendigo.acetest.cucumber"},
+        plugin = {"pretty", "html:target/cucumber"})
+public class CucumberTest {
+}
+```
+
+### Tips
 
 * Paths to all test folders are exposed to properties foldername.dir which can be referenced as '${foldername.dir}'
 (e.g. ${in.dir}, ${out.dir}, etc).
@@ -45,38 +55,40 @@ folders:
 * All Strings in data tables are trimmed. Use quotation to work around this (e.g. "I need this spaces   ").
 * Exception matching checks on 'contains' in "ExceptionClass: exceptionMessage".
 * Don't forget to add empty property file in test resources to satisfy Spring @PropertySource.
+* Table and column names are case-insensitive
+* Locate .feature file under the same folder structure as TestLauncher or specify *feature* option in @CucumberOptions
 
-#### Available steps
+### Available steps
 
 See **AceTestSteps.java**
 
-##### Given
+#### Given
 
 * "^Properties:$"
-* "^Table (.*) is empty$"
-* "^(.*) table (.*) is empty$" - dbName, tableName
+* "^Table (.\*) is empty$"
+* "^(.\*) table (.\*) is empty$" - dbName, tableName
 * "^Table (.*) with records:$" - tableName, dbRecords
-* "^(.*) table (.*) with records:$" - dbName, tableName, dbRecords
-* "^File (.*) in folder (.*) with lines:$"  - fileName, folderName, fileRows
+* "^(.\*) table (.\*) with records:$" - dbName, tableName, dbRecords
+* "^File (.\*) in folder (.\*) with lines:$"  - fileName, folderName, fileRows
 
-##### When
+#### When
 
-* "^Application (.*) runs with params: '(.*)'$" - appName, params
-* "^Application (.*) runs$" - appName
-* "^Application (.*) runs with params: '(.*)', it fails with exception: (.*)$" - appName, params, expectedException
-* "^Application (.*) runs, it fails with exception: (.*)$" - appName, expectedException
+* "^Application (.\*) runs with params: '(.\*)'$" - appName, params
+* "^Application (.\*) runs$" - appName
+* "^Application (.\*) runs with params: '(.\*)', it fails with exception: (.\*)$" - appName, params, expectedException
+* "^Application (.\*) runs, it fails with exception: (.\*)$" - appName, expectedException
 
-##### Then
+#### Then
 
-* "^Table (.*) will have records:$" - tableName, dbRows
-* "^(.*) table (.*) will have records:$" - dbName, tableName, dbRows
-* "^Table (.*) will be empty$" - tableName
-* "^(.*) table (.*) will be empty$" - dbName, tableName
-* "^Folder (.*) will have files: (.*)$" - folderName, fileNames (e.g. 'file.txt, file2.txt')
+* "^Table (.\*) will have records:$" - tableName, dbRows
+* "^(.\*) table (.\*) will have records:$" - dbName, tableName, dbRows
+* "^Table (.\*) will be empty$" - tableName
+* "^(.\*) table (.\*) will be empty$" - dbName, tableName
+* "^Folder (.\*) will have files: (.\*)$" - folderName, fileNames (e.g. 'file.txt, file2.txt')
 * "^Folder (.*) will be empty$" - folderName
-* "^File (.*) in folder (.*) will have lines:$" - fileName, folderName, fileLines
+* "^File (.\*) in folder (.\*) will have lines:$" - fileName, folderName, fileLines
 
-#### Scenario example
+### Scenario example
 
 ```cucumber
 Feature: Sample
@@ -115,6 +127,6 @@ Feature: Sample
       | 3,Xiaomi Huami Amazfit Watch,,4499.00,2016-11-02,2016-11-02 10:35                          |
 ```
 
-#### Other examples
+### Other examples
 
 See tests in this repo and more examples here: [ace-test-examples](https://github.com/vendigo/ace-test-examples)
