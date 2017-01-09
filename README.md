@@ -1,4 +1,4 @@
-# ACE-TEST
+![ace-test](/ace-test-logo.png?raw=true "ace-test")
 
 [![Build Status](https://travis-ci.org/vendigo/ace-test.svg?branch=master)](https://travis-ci.org/vendigo/ace-test)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.vendigo/ace-test.svg)](http://search.maven.org/#search%7Cga%7C1%7Cace-test)
