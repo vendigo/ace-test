@@ -14,6 +14,7 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -54,6 +55,10 @@ public class DatasourceContext {
         SpringLiquibase springLiquibase = new SpringLiquibase();
         springLiquibase.setDataSource(datasource);
         springLiquibase.setChangeLog(dsConfig.getLiquibaseConfig());
+        String liquibaseContexts = dsConfig.getLiquibaseContexts();
+        if (!StringUtils.isEmpty(liquibaseContexts)) {
+            springLiquibase.setContexts(liquibaseContexts);
+        }
         springLiquibase.setResourceLoader(new DefaultResourceLoader());
         springLiquibase.setDefaultSchema(H2_DEFAULT_SCHEMA);
         springLiquibase.afterPropertiesSet();

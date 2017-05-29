@@ -30,6 +30,7 @@ datasources:
   - dbName: devDb2
     url: jdbc:h2:mem:devdb2
     liquibaseConfig: /liquibase/_liquibase.xml
+    liquibaseContexts: prod
 folders:
   - in
   - out

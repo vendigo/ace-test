@@ -7,5 +7,6 @@ public class DatasourceConfig {
     private String dbName;
     private String url;
     private String liquibaseConfig;
+    private String liquibaseContexts;
     private String schemaFile;
 }
