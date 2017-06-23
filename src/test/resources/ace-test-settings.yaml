@@ -2,10 +2,21 @@ launchers:
   - appName: TestApp
     className: test.app.Launcher
 datasources:
-  - dbName: devDb
-    url: jdbc:h2:mem:devdb
+  - dbName: AceTest
+    url: jdbc:h2:mem:AceTest
     schemaFile: schema.sql
     liquibaseConfig: /liquibase/_liquibase.xml
+  - dbName: contextDb
+    url: jdbc:h2:mem:contextDb;DATABASE_TO_UPPER=false;
+    liquibaseConfig: /liquibase/context/_liquibase.xml
+  - dbName: contextProdDb
+    url: jdbc:h2:mem:contextProdDb;DATABASE_TO_UPPER=false;
+    liquibaseConfig: /liquibase/context/_liquibase.xml
+    liquibaseContexts: "prod"
+  - dbName: contextTestDb
+    url: jdbc:h2:mem:contextTestDb;DATABASE_TO_UPPER=false;
+    liquibaseConfig: /liquibase/context/_liquibase.xml
+    liquibaseContexts: "test"
 folders:
   - in
   - out
