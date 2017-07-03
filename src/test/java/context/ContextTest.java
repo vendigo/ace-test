@@ -5,7 +5,7 @@ import com.github.vendigo.acetest.config.Config;
 import com.github.vendigo.acetest.config.DatasourceConfig;
 import com.github.vendigo.acetest.db.DatasourceContext;
 import com.github.vendigo.acetest.utils.Utils;
-import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
