@@ -12,9 +12,13 @@ import java.util.Optional;
 @Component
 @Slf4j
 public class AppRunner {
-    public static final String SPACE = " ";
+    private static final String SPACE = " ";
+    private final Config config;
+
     @Autowired
-    Config config;
+    public AppRunner(Config config) {
+        this.config = config;
+    }
 
     public Throwable runApplication(String appName, String params, boolean catchExceptions) throws Throwable {
         Optional<LauncherConfig> launcherConfig = config.getLaunchers()

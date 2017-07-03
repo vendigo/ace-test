@@ -1,42 +1,43 @@
 package com.github.vendigo.acetest.cucumber;
 
-import com.github.vendigo.acetest.SpringConfig;
+import com.github.vendigo.acetest.assertion.ExceptionMatcher;
 import com.github.vendigo.acetest.db.dao.CrudService;
 import com.github.vendigo.acetest.files.FileManager;
 import com.github.vendigo.acetest.properties.PropertySetter;
 import com.github.vendigo.acetest.run.AppRunner;
-import com.github.vendigo.acetest.assertion.ExceptionMatcher;
+import com.github.vendigo.acetest.spring.ContextHolder;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.context.ApplicationContext;
 
 import java.util.List;
 import java.util.Map;
 
-import static com.github.vendigo.acetest.conversion.DataConverter.parseDataForInsert;
 import static com.github.vendigo.acetest.assertion.DbDataMatcher.assertData;
 import static com.github.vendigo.acetest.assertion.DbDataMatcher.collectColumnNames;
+import static com.github.vendigo.acetest.conversion.DataConverter.parseDataForInsert;
 import static com.github.vendigo.acetest.files.FileMatcher.assertFileLines;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-@ContextConfiguration(classes = SpringConfig.class)
 public class AceTestSteps {
-
-    @Autowired
     private PropertySetter propertySetter;
-    @Autowired
     private CrudService crudService;
-    @Autowired
     private AppRunner appRunner;
-    @Autowired
     private FileManager fileManager;
+
+    public AceTestSteps() {
+        ApplicationContext appContext = ContextHolder.getAppContext();
+        propertySetter = appContext.getBean(PropertySetter.class);
+        crudService = appContext.getBean(CrudService.class);
+        appRunner = appContext.getBean(AppRunner.class);
+        fileManager = appContext.getBean(FileManager.class);
+    }
 
     @Before
     public void setUp() {

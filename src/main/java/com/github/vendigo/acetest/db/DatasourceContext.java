@@ -34,6 +34,7 @@ public class DatasourceContext {
 
     @PostConstruct
     public void init() {
+        log.info("Datasource init");
         for (DatasourceConfig dsConfig : config.getDatasources()) {
             DataSource datasource = createDatasource(dsConfig);
             if (dsConfig.getSchemaFile() != null) {

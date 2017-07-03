@@ -1,6 +1,6 @@
 package context;
 
-import com.github.vendigo.acetest.SpringConfig;
+import com.github.vendigo.acetest.spring.SpringConfig;
 import com.github.vendigo.acetest.config.Config;
 import com.github.vendigo.acetest.config.DatasourceConfig;
 import com.github.vendigo.acetest.db.DatasourceContext;

@@ -1,11 +1,13 @@
 package com.github.vendigo.acetest.utils;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.Collection;
 import java.util.Iterator;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Utils {
-    private Utils() {
-    }
 
     public static <T> T getOnlyElement(Collection<T> collection) {
         Iterator<T> iterator = collection.iterator();

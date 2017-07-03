@@ -1,4 +1,4 @@
-package com.github.vendigo.acetest;
+package com.github.vendigo.acetest.spring;
 
 import com.github.vendigo.acetest.config.Config;
 import com.github.vendigo.acetest.config.ConfigParser;
@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackageClasses = SpringConfig.class)
+@ComponentScan(basePackages = "com.github.vendigo.acetest")
 public class SpringConfig {
     @Bean
     public Config config() {
