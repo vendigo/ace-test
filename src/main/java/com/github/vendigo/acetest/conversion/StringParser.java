@@ -2,13 +2,13 @@ package com.github.vendigo.acetest.conversion;
 
 import static liquibase.util.StringUtils.trimToNull;
 
-public class StringParser {
-    public static final String NULL_PLACEHOLDER = "{null}";
-    public static final String EMPTY_STRING_PLACEHOLDER = "{empty}";
-    public static final String EMPTY_STRING = "";
-    public static final String QUOTED_STRING_REGEX  = "\".*\"";
+class StringParser {
+    private static final String NULL_PLACEHOLDER = "{null}";
+    private static final String EMPTY_STRING_PLACEHOLDER = "{empty}";
+    private static final String EMPTY_STRING = "";
+    private static final String QUOTED_STRING_REGEX  = "\".*\"";
 
-    public static Object parseString(String str) {
+    static Object parseString(String str) {
         str = trimToNull(str);
         if (str == null) {
             return null;

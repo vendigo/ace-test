@@ -10,7 +10,7 @@ import java.util.Map;
 @Component
 @Slf4j
 public class PropertySetter {
-    public static final String EQUAL_SIGN = "=";
+    private static final String EQUAL_SIGN = "=";
     private Map<String, String> placeholders = new HashMap<>();
 
     public void parseAndSetProperties(List<String> lines) {

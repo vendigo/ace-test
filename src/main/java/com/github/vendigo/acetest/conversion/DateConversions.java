@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 
-public class DateConversions {
+class DateConversions {
     private static DateTimeFormatter outDateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SS");
     private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -16,7 +16,7 @@ public class DateConversions {
     /**
      * Parses LocalDate or LocalDateTime from the String (from Scenario to Assertion)
      */
-    public static Object parseDate(String str) {
+    static Object parseDate(String str) {
         try {
             return LocalDateTime.parse(str, dateTimeFormat);
         } catch (DateTimeParseException e1) {
@@ -31,21 +31,21 @@ public class DateConversions {
     /**
      * Format LocalDate for inserting into db as String.
      */
-    public static String formatLocalDate(LocalDate localDate) {
+    static String formatLocalDate(LocalDate localDate) {
         return localDate.format(dateFormat);
     }
 
     /**
      * Format LocalDateTime for inserting into db as String.
      */
-    public static String formatLocalDateTime(LocalDateTime localDateTime) {
+    static String formatLocalDateTime(LocalDateTime localDateTime) {
         return localDateTime.format(outDateTimeFormat);
     }
 
     /**
      * Convert Date to LocalDate or LocalDateTime based on time. (from Db to Assertion)
      */
-    public static Object convertDate(Date date) {
+    static Object convertDate(Date date) {
         LocalDateTime localDateTime = toLocalDate(date);
         int hour = localDateTime.getHour();
         int minute = localDateTime.getMinute();

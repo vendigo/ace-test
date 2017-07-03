@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.function.Supplier;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Utils {
@@ -31,5 +32,14 @@ public class Utils {
     public static <T> T getFirst(Collection<? extends T> collection, T defaultValue) {
         Iterator<? extends T> iterator = collection.iterator();
         return iterator.hasNext() ? iterator.next() : defaultValue;
+    }
+
+    public static <T> T getFirst(Collection<? extends T> collection, Supplier<RuntimeException> exception) {
+        Iterator<? extends T> iterator = collection.iterator();
+        if (iterator.hasNext()) {
+            return iterator.next();
+        } else {
+            throw exception.get();
+        }
     }
 }

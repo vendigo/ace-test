@@ -24,17 +24,20 @@ import java.util.Map;
 @Component
 @Slf4j
 public class DatasourceContext {
-    public static final String H2_DRIVER_CLASSNAME = "org.h2.Driver";
-    public static final String H2_DEFAULT_SCHEMA = "PUBLIC";
+    public static final String H2_DRIVER_CLASS_NAME = "org.h2.Driver";
+    private static final String H2_DEFAULT_SCHEMA = "PUBLIC";
     private Map<String, SqlSessionFactory> sessionFactories = new HashMap<>();
     private SqlFileRunner sqlFileRunner = new SqlFileRunner();
+    private final Config config;
 
     @Autowired
-    Config config;
+    public DatasourceContext(Config config) {
+        this.config = config;
+    }
 
     @PostConstruct
     public void init() {
-        log.info("Datasource init");
+        log.info("Init datasource");
         for (DatasourceConfig dsConfig : config.getDatasources()) {
             DataSource datasource = createDatasource(dsConfig);
             if (dsConfig.getSchemaFile() != null) {
@@ -78,7 +81,7 @@ public class DatasourceContext {
     private DataSource createDatasource(DatasourceConfig dsConfig) {
         log.info("Creating dataSource {}", dsConfig.getDbName());
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(H2_DRIVER_CLASSNAME);
+        dataSource.setDriverClassName(H2_DRIVER_CLASS_NAME);
         dataSource.setUrl(dsConfig.getUrl());
         return dataSource;
     }

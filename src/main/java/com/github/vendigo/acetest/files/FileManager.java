@@ -20,13 +20,18 @@ import static java.util.stream.Collectors.toList;
 
 @Component
 public class FileManager {
-    public static final String TEST_DIR_SUFFIX = ".dir";
-    @Autowired
-    private Config config;
-    @Autowired
-    private PropertySetter propertySetter;
+    private static final String TEST_DIR_SUFFIX_1 = ".dir";
+    private static final String TEST_DIR_SUFFIX_2 = ".folder";
+    private final Config config;
+    private final PropertySetter propertySetter;
     private TemporaryFolder tempFolder;
     private Map<String, File> folders = new HashMap<>();
+
+    @Autowired
+    public FileManager(Config config, PropertySetter propertySetter) {
+        this.config = config;
+        this.propertySetter = propertySetter;
+    }
 
     @SneakyThrows
     public void createFolders() {
@@ -35,7 +40,8 @@ public class FileManager {
             tempFolder.create();
             for (String folderName : config.getFolders()) {
                 File folder = tempFolder.newFolder(folderName);
-                propertySetter.addPlaceholder(folderName + TEST_DIR_SUFFIX, folder.getAbsolutePath());
+                propertySetter.addPlaceholder(folderName + TEST_DIR_SUFFIX_1, folder.getAbsolutePath());
+                propertySetter.addPlaceholder(folderName + TEST_DIR_SUFFIX_2, folder.getAbsolutePath());
                 folders.put(folderName, folder);
             }
         }

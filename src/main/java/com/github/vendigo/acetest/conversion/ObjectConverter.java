@@ -4,8 +4,8 @@ import java.util.Date;
 
 import static com.github.vendigo.acetest.conversion.NumberConversions.integerToLong;
 
-public class ObjectConverter {
-    public static Object convertForAssertion(Object o) {
+class ObjectConverter {
+    static Object convertForAssertion(Object o) {
         if (o instanceof Number) {
             return integerToLong((Number)o);
         }

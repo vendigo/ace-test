@@ -13,8 +13,12 @@ import java.util.function.Function;
 
 @Service
 public class CrudService {
+    private final DatasourceContext datasourceContext;
+
     @Autowired
-    DatasourceContext datasourceContext;
+    public CrudService(DatasourceContext datasourceContext) {
+        this.datasourceContext = datasourceContext;
+    }
 
     public void deleteAll(String tableName) {
         deleteAll(datasourceContext.getOnlyDbName(), tableName);

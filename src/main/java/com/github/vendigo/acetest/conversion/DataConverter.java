@@ -28,8 +28,8 @@ public class DataConverter {
                 .collect(Collectors.toList());
     }
 
-    public static <T, U> Function<Map<String, T>, Map<String, U>> parseRow(Function<String, String> keyConvert,
-                                                                             Function<T, U> valueConvert) {
+    private static <T, U> Function<Map<String, T>, Map<String, U>> parseRow(Function<String, String> keyConvert,
+                                                                            Function<T, U> valueConvert) {
         return (inputRow) -> {
             Map<String, U> resultMap = new HashMap<>();
             inputRow.forEach((key, value) -> {

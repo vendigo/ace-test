@@ -3,7 +3,7 @@ Feature: Sample
   Background:
     Given Properties:
       | db.driverClassName=org.h2.Driver |
-      | db.url=jdbc:h2:mem:AceTest       |
+      | db.url=jdbc:h2:mem:devDb         |
       | input.dir=${in.dir}              |
       | output.dir=${out.dir}            |
 
