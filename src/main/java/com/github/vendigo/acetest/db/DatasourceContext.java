@@ -3,7 +3,7 @@ package com.github.vendigo.acetest.db;
 import com.github.vendigo.acetest.config.Config;
 import com.github.vendigo.acetest.config.DatasourceConfig;
 import com.github.vendigo.acetest.db.dao.CrudMapper;
-import com.google.common.collect.Iterables;
+import com.github.vendigo.acetest.utils.Utils;
 import liquibase.integration.spring.SpringLiquibase;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -87,6 +87,6 @@ public class DatasourceContext {
     }
 
     public String getOnlyDbName() {
-        return Iterables.getOnlyElement(sessionFactories.keySet());
+        return Utils.getOnlyElement(sessionFactories.keySet());
     }
 }

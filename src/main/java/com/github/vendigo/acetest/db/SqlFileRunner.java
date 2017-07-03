@@ -7,8 +7,8 @@ import javax.sql.DataSource;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
-public class SqlFileRunner {
-    public void applySchemaFile(String fileName, DataSource dataSource) {
+class SqlFileRunner {
+    void applySchemaFile(String fileName, DataSource dataSource) {
         ClassLoader classLoader = this.getClass().getClassLoader();
         try (InputStream fileStream = classLoader.getResourceAsStream(fileName)) {
             String fileContent = IOUtils.toString(fileStream, Charset.defaultCharset());

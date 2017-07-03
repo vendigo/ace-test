@@ -5,7 +5,6 @@ import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(glue = {"cucumber.api.spring", "com.github.vendigo.acetest.cucumber"},
-        plugin = {"pretty", "html:target/cucumber"})
+@CucumberOptions(glue = "com.github.vendigo.acetest.cucumber")
 public class CucumberTest {
 }

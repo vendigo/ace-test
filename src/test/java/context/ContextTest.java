@@ -4,7 +4,7 @@ import com.github.vendigo.acetest.SpringConfig;
 import com.github.vendigo.acetest.config.Config;
 import com.github.vendigo.acetest.config.DatasourceConfig;
 import com.github.vendigo.acetest.db.DatasourceContext;
-import com.google.common.collect.Iterables;
+import com.github.vendigo.acetest.utils.Utils;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,9 +27,9 @@ import static org.junit.Assert.assertEquals;
 @ContextConfiguration(classes = SpringConfig.class)
 public class ContextTest {
     private static final String STATEMENT = "SELECT count(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = ?";
-    public static final String COMMON_TABLE = "CommonTable";
-    public static final String TEST_ONLY = "TestOnly";
-    public static final String PROD_ONLY = "ProdOnly";
+    private static final String COMMON_TABLE = "CommonTable";
+    private static final String TEST_ONLY = "TestOnly";
+    private static final String PROD_ONLY = "ProdOnly";
 
     @Autowired
     private Config config;
@@ -44,19 +44,19 @@ public class ContextTest {
 
     @Test
     public void dbWithNoContextsAllTablesShouldBeCreated() {
-        DatasourceConfig allDbContext = Iterables.getOnlyElement(configMap.get("contextDb"));
+        DatasourceConfig allDbContext = Utils.getOnlyElement(configMap.get("contextDb"));
         testSchema(allDbContext, Arrays.asList(COMMON_TABLE, TEST_ONLY, PROD_ONLY), Collections.emptyList());
     }
 
     @Test
     public void dbWithProdContextNoTestContextTablesShouldBeCreated() {
-        DatasourceConfig prodDbContext = Iterables.getOnlyElement(configMap.get("contextProdDb"));
+        DatasourceConfig prodDbContext = Utils.getOnlyElement(configMap.get("contextProdDb"));
         testSchema(prodDbContext, Arrays.asList(COMMON_TABLE, PROD_ONLY), Collections.singletonList(TEST_ONLY));
     }
 
     @Test
     public void dbWithTestContextNoProdTablesShouldBeCreated() {
-        DatasourceConfig testDbContext = Iterables.getOnlyElement(configMap.get("contextTestDb"));
+        DatasourceConfig testDbContext = Utils.getOnlyElement(configMap.get("contextTestDb"));
         testSchema(testDbContext, Arrays.asList(COMMON_TABLE, TEST_ONLY), Collections.singletonList(PROD_ONLY));
     }
 

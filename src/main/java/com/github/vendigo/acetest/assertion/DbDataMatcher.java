@@ -1,6 +1,6 @@
 package com.github.vendigo.acetest.assertion;
 
-import com.google.common.collect.Iterables;
+import com.github.vendigo.acetest.utils.Utils;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +24,6 @@ public class DbDataMatcher {
 
     @SuppressWarnings("ConstantConditions")
     public static Set<String> collectColumnNames(List<Map<String, String>> records) {
-        return Iterables.<Map<String, String>>getFirst(records, Collections.emptyMap()).keySet();
+        return Utils.<Map<String, String>>getFirst(records, Collections.emptyMap()).keySet();
     }
 }
