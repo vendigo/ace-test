@@ -9,13 +9,14 @@
 <dependency>
     <groupId>com.github.vendigo</groupId>
     <artifactId>ace-test</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
 ### Configuration
 
 In test resources create file **ace-test-settings.yaml** with the following structure:
+(Other possible names: ace-test-settings.yml, ace-test-config.yaml, ace-test-config.yml)
 
 ```yaml
 launchers:
@@ -41,16 +42,16 @@ folders:
 
 ```java
 @RunWith(Cucumber.class)
-@CucumberOptions(glue = {"cucumber.api.spring", "com.github.vendigo.acetest.cucumber"},
-        plugin = {"pretty", "html:target/cucumber"})
+@CucumberOptions(glue = {"com.github.vendigo.acetest.cucumber"})
 public class CucumberTest {
 }
 ```
 
 ### Tips
 
-* Paths to all test folders are exposed to properties foldername.dir which can be referenced as '${foldername.dir}'
-(e.g. ${in.dir}, ${out.dir}, etc).
+* AceTestSteps are Spring independent, this means you can write your own steps with @ContextConfiguration and use them together.
+* Paths to all test folders are exposed to properties foldername.dir and foldername.folder which can be referenced as '${foldername.dir}'
+(e.g. ${in.dir}, ${out.dir}, ${out.folder}, etc).
 * Date format in scenarios: yyyy-MM-dd. For dateTime: yyyy-MM-dd hh:mm.
 * String can be quoted with "".
 * There are placeholders {null} and {empty} (empty String).
