@@ -7,6 +7,8 @@ class StringParser {
     private static final String EMPTY_STRING_PLACEHOLDER = "{empty}";
     private static final String EMPTY_STRING = "";
     private static final String QUOTED_STRING_REGEX  = "\".*\"";
+    private static final String TRUE = "true";
+    private static final String FALSE = "false";
 
     static Object parseString(String str) {
         str = trimToNull(str);
@@ -22,6 +24,11 @@ class StringParser {
             return resolvePlaceholder(str);
         }
 
+        Boolean booleanValue = parseBool(str);
+        if (booleanValue != null) {
+            return booleanValue;
+        }
+
         Object date = DateConversions.parseDate(str);
         if (date != null) {
             return date;
@@ -33,6 +40,18 @@ class StringParser {
         }
 
         return str;
+    }
+
+    private static Boolean parseBool(String str) {
+        if (str.equalsIgnoreCase(TRUE)) {
+            return Boolean.TRUE;
+        }
+
+        if (str.equalsIgnoreCase(FALSE)) {
+            return Boolean.FALSE;
+        }
+
+        return null;
     }
 
     private static Object unQuote(String str) {

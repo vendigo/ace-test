@@ -73,3 +73,15 @@ Feature: Sample
       | 2  | Mi Band 2                  | Fitness band from Xiaomi, 2nd generation | 429.00 | 2015-02-22 | 2016-11-06 16:30 |
       | 3  | Xiaomi Huami Amazfit Watch | {empty}                                  | 4499   | 2016-11-02 | 2016-11-02 10:35 |
       | 4  | "2048"                     | Interactive game 2048                    | 200.5  | 2016-11-25 | 2016-11-26 08:01 |
+
+  Scenario: Boolean assertion
+    And AceTest table Product with records:
+      | id | name                       | available |
+      | 1  | Mi Band 1s                 | false     |
+      | 2  | Mi Band 2                  | true      |
+      | 3  | Xiaomi Huami Amazfit Watch | true      |
+    Then AceTest table Product will have records:
+      | id | name                       | available |
+      | 1  | Mi Band 1s                 | false     |
+      | 2  | Mi Band 2                  | true      |
+      | 3  | Xiaomi Huami Amazfit Watch | true      |

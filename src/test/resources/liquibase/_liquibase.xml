@@ -8,6 +8,7 @@
             <column name="id" type="bigint" />
             <column name="name" type="varchar(50)" />
             <column name="description" type="varchar(500)" />
+            <column name="available" type="boolean" />
             <column name="price" type="float"/>
             <column name="insertDate" type="date" />
             <column name="lastUpdateTime" type="datetime" />
