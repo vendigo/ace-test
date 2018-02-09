@@ -1,5 +1,6 @@
 package com.github.vendigo.acetest.conversion;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -12,6 +13,7 @@ class DateConversions {
     private static DateTimeFormatter outDateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SS");
     private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private static DateTimeFormatter localTimeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     /**
      * Parses LocalDate or LocalDateTime from the String (from Scenario to Assertion)
@@ -23,7 +25,11 @@ class DateConversions {
             try {
                 return LocalDate.parse(str, dateFormat);
             } catch (DateTimeParseException e2) {
-                return null;
+                try {
+                    return LocalTime.parse(str);
+                } catch (DateTimeParseException e) {
+                    return null;
+                }
             }
         }
     }
@@ -43,6 +49,13 @@ class DateConversions {
     }
 
     /**
+     * Format LocalDateTime for inserting into db as String.
+     */
+    static String formatLocalTime(LocalTime localTime) {
+        return localTime.format(localTimeFormat);
+    }
+
+    /**
      * Convert Date to LocalDate or LocalDateTime based on time. (from Db to Assertion)
      */
     static Object convertDate(Date date) {
@@ -55,6 +68,10 @@ class DateConversions {
         } else {
             return localDateTime;
         }
+    }
+
+    public static Object convertTime(Time o) {
+        return o.toLocalTime();
     }
 
     private static LocalDateTime toLocalDate(Date date) {
