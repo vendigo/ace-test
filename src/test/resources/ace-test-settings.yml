@@ -1,0 +1,11 @@
+launchers:
+  - appName: TestApp
+    className: test.app.Launcher
+datasources:
+  - dbName: AceTest
+    url: jdbc:h2:mem:AceTest
+    schemaFile: schema.sql
+    liquibaseConfig: /liquibase/_liquibase.xml
+folders:
+  - in
+  - out

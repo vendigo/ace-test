@@ -24,7 +24,7 @@ import static com.github.vendigo.acetest.db.DatasourceContext.H2_DRIVER_CLASS_NA
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringConfig.class)
+@ContextConfiguration(classes = {SpringConfig.class, TestContext.class})
 public class ContextTest {
     private static final String STATEMENT = "SELECT count(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = ?";
     private static final String COMMON_TABLE = "CommonTable";
