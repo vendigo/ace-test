@@ -1,6 +1,6 @@
 package com.github.vendigo.acetest.cucumber;
 
-import com.github.vendigo.acetest.assertion.ExceptionMatcherKt;
+import com.github.vendigo.acetest.assertion.ExceptionMatcher;
 import com.github.vendigo.acetest.db.dao.CrudService;
 import com.github.vendigo.acetest.files.FileManager;
 import com.github.vendigo.acetest.properties.PropertySetter;
@@ -97,14 +97,14 @@ public class AceTestSteps {
     @When("^Application (.*) runs with params: '(.*)', it fails with exception: (.*)$")
     public void applicationFails(String appName, String params, String stackTraceContains) throws Throwable {
         Throwable throwable = appRunner.runApplication(appName, params, true);
-        ExceptionMatcherKt.matchException(throwable, stackTraceContains);
+        ExceptionMatcher.matchException(throwable, stackTraceContains);
     }
 
     @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
     @When("^Application (.*) runs, it fails with exception: (.*)$")
     public void applicationRunFails(String appName, String stackTraceContains) throws Throwable {
         Throwable throwable = appRunner.runApplication(appName, "", true);
-        ExceptionMatcherKt.matchException(throwable, stackTraceContains);
+        ExceptionMatcher.matchException(throwable, stackTraceContains);
     }
 
     @Then("^Table (.*) will have records:$")
