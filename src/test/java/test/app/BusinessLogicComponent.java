@@ -32,7 +32,9 @@ public class BusinessLogicComponent {
     private CountryParser countryParser;
 
     public void run(boolean disableAreaLimit) {
-        List<Country> bigCountries = countryParser.parseCountriesCsv().stream()
+        List<Country> parsedCountries = countryParser.parseCountriesCsv();
+        log.info("Parsed countries: {}", parsedCountries);
+        List<Country> bigCountries = parsedCountries.stream()
                 .filter(country -> disableAreaLimit || country.getArea() > areaLimit)
                 .collect(Collectors.toList());
 

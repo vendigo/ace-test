@@ -43,6 +43,7 @@ public class AceTestSteps {
 
     @Before
     public void setUp() {
+        log.info("Folders created");
         fileManager.createFolders();
     }
 

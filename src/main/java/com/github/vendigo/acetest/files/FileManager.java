@@ -3,6 +3,7 @@ package com.github.vendigo.acetest.files;
 import com.github.vendigo.acetest.config.Config;
 import com.github.vendigo.acetest.properties.PropertySetter;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.rules.TemporaryFolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 
 @Component
+@Slf4j
 public class FileManager {
     private static final String TEST_DIR_SUFFIX_1 = ".dir";
     private static final String TEST_DIR_SUFFIX_2 = ".folder";
@@ -56,6 +58,7 @@ public class FileManager {
     @SneakyThrows
     public void createTestFile(String folderName, String fileName, List<String> lines) {
         Path newFilePath = folders.get(folderName).toPath().resolve(fileName);
+        log.info("Created file: {}", newFilePath);
         Files.write(newFilePath, lines);
     }
 
