@@ -11,6 +11,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 
 import java.util.List;
@@ -25,6 +26,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
 
+@Slf4j
 public class AceTestSteps {
     private PropertySetter propertySetter;
     private CrudService crudService;
@@ -84,6 +86,7 @@ public class AceTestSteps {
     @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
     @When("^Application (.*) runs with params: '(.*)'$")
     public void applicationRun(String appName, String params) throws Throwable {
+        log.info("Cucumber run app: {}, with params: {}", appName, params);
         appRunner.runApplication(appName, params, false);
     }
 

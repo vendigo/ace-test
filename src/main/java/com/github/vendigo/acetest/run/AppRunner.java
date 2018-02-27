@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Optional;
 
 @Component
@@ -35,10 +36,10 @@ public class AppRunner {
 
     private Throwable run(String className, String params, boolean catchExceptions) throws Throwable {
         try {
-            log.info("Running {} with params: {}", className, params);
             Class<?> appClass = Class.forName(className);
             Method mainMethod = appClass.getMethod("main", String[].class);
             String[] args = params.split(SPACE);
+            log.info("Running {} with params: '{}', as array: {}", className, params, Arrays.toString(args));
             mainMethod.invoke(null, (Object) args);
         } catch (Throwable t) {
             if (catchExceptions) {
