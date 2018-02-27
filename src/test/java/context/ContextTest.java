@@ -6,6 +6,7 @@ import com.github.vendigo.acetest.spring.SpringConfig;
 import com.github.vendigo.acetest.utils.Utils;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {SpringConfig.class, TestContext.class})
+@Ignore
 public class ContextTest {
     private static final String STATEMENT = "SELECT count(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = ?";
     private static final String COMMON_TABLE = "CommonTable";

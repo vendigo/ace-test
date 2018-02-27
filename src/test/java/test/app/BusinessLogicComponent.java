@@ -1,5 +1,6 @@
 package test.app;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@Slf4j
 public class BusinessLogicComponent {
     @Value("${area.limit}")
     private int areaLimit;
@@ -33,6 +35,8 @@ public class BusinessLogicComponent {
         List<Country> bigCountries = countryParser.parseCountriesCsv().stream()
                 .filter(country -> disableAreaLimit || country.getArea() > areaLimit)
                 .collect(Collectors.toList());
+
+        log.info("DisableAreaLimit: {}, Big countries: {}", disableAreaLimit, bigCountries);
         countryRepository.save(bigCountries);
 
         Iterable<Product> products = productRepository.findAll();
