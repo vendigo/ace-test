@@ -5,13 +5,20 @@
 
     <changeSet id="1" author="vendigo">
         <createTable tableName="Product">
-            <column name="id" type="bigint" />
-            <column name="name" type="varchar(50)" />
-            <column name="description" type="varchar(500)" />
-            <column name="available" type="boolean" />
+            <column name="id" type="bigint"/>
+            <column name="name" type="varchar(50)"/>
+            <column name="description" type="varchar(500)"/>
+            <column name="available" type="boolean"/>
             <column name="price" type="float"/>
-            <column name="insertDate" type="date" />
-            <column name="lastUpdateTime" type="datetime" />
+            <column name="insertDate" type="date"/>
+            <column name="lastUpdateTime" type="datetime"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="stepanel">
+        <createTable tableName="LocalTimeTest">
+            <column name="country" type="varchar(10)"/>
+            <column name="localTime" type="time(0)"/>
         </createTable>
     </changeSet>
 
